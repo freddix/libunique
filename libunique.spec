@@ -1,7 +1,7 @@
 Summary:	Library to make sure only one instance of a program is running
 Name:		libunique
 Version:	1.1.6
-Release:	5
+Release:	6
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libunique/1.1/%{name}-%{version}.tar.bz2
@@ -11,7 +11,6 @@ Patch1:		%{name}-gdbus.patch
 URL:		http://live.gnome.org/LibUnique
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	dbus-glib-devel
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk+-devel
 BuildRequires:	libtool
@@ -52,6 +51,7 @@ unique library API documentation.
 %{__autoheader}
 %{__automake}
 %configure \
+	--disable-dbus			\
 	--disable-silent-rules		\
 	--disable-static		\
 	--enable-introspection		\
@@ -64,6 +64,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
